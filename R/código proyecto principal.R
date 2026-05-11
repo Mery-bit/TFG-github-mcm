@@ -31,22 +31,22 @@ names(df)
 df <- df %>%
   rename(
     pais                 = pais,  
-    gdp_pc_ppp_2023       = pib_per_capita_fmi_2023,
-    income_group_2023     = nivel_de_ingreso_2023,
+    gdp_pc_ppp       = pib_per_capita_fmi_2023,
+    income_group     = nivel_de_ingreso_2023,
     region                = region,
-    unemp_rate_2023       = desempleo_percent_total_2023,
-    elec_access_2023      = acceso_a_electricidad_percent_total_2023,
-    elec_kwh_pc_2023      = consumo_de_energia_electrica_k_wh_per_capita_2023,
-    rural_pct_2023        = poblacion_rural_percent_de_la_poblacion_total_2023,
-    ghg_pc_2023           = emisiones_totales_gases_efecto_invernadero_per_capita_c02e_capita_2023,
-    lifeexp_2023          = esperanza_de_vida_al_nacer_anos_media_entre_h_y_m_2023,
-    f_m_tertiary_2023     = mujeres_vs_hombres_en_eduacion_terciaria_2023,
-    secure_servers_pm_2023 = servidores_de_internet_seguros_por_cada_millon_de_personas_2023,
-    infra_lpi_2022        = calidad_de_la_infraestructura_relacionada_con_el_comercio_y_el_transporte_2022,
-    mat_mort_2023         = tasa_de_mortalidad_materna_por_cada_100000_nacidos_vivos_2023,
-    physicians_per1k_2023 = medicos_por_cada_1000_personas_2023,
-    water_access_2023     = acceso_a_agua_potable_percent_poblacion_2023,
-    hdi_2023              = nivel_de_desarrollo_humano_segun_la_onu_2023
+    unemp_rate       = desempleo_percent_total_2023,
+    elec_access     = acceso_a_electricidad_percent_total_2023,
+    elec_kwh_pc     = consumo_de_energia_electrica_k_wh_per_capita_2023,
+    rural_pct     = poblacion_rural_percent_de_la_poblacion_total_2023,
+    ghg_pc         = emisiones_totales_gases_efecto_invernadero_per_capita_c02e_capita_2023,
+    lifeexp         = esperanza_de_vida_al_nacer_anos_media_entre_h_y_m_2023,
+    f_m_tertiary     = mujeres_vs_hombres_en_eduacion_terciaria_2023,
+    secure_servers = servidores_de_internet_seguros_por_cada_millon_de_personas_2023,
+    infra_lpi = calidad_de_la_infraestructura_relacionada_con_el_comercio_y_el_transporte_2022,
+    mat_mort         = tasa_de_mortalidad_materna_por_cada_100000_nacidos_vivos_2023,
+    physicians = medicos_por_cada_1000_personas_2023,
+    water_access = acceso_a_agua_potable_percent_poblacion_2023,
+    hdi    = nivel_de_desarrollo_humano_segun_la_onu_2023
   )
 names(df)
 
@@ -56,20 +56,20 @@ names(df)
 
 # Selección variables numéricas del EDA
 vars_eda <- c(
-  "gdp_pc_ppp_2023",
-  "unemp_rate_2023",
-  "elec_access_2023",
-  "elec_kwh_pc_2023",
-  "rural_pct_2023",
-  "ghg_pc_2023",
-  "lifeexp_2023",
-  "f_m_tertiary_2023",
-  "secure_servers_pm_2023",
-  "infra_lpi_2022",
-  "mat_mort_2023",
-  "physicians_per1k_2023",
-  "water_access_2023",
-  "hdi_2023"
+  "gdp_pc_ppp",
+  "unemp_rate",
+  "elec_access",
+  "elec_kwh_pc",
+  "rural_pct",
+  "ghg_pc",
+  "lifeexp",
+  "f_m_tertiary",
+  "secure_servers",
+  "infra_lpi",
+  "mat_mort",
+  "physicians",
+  "water_access",
+  "hdi"
 )
 
 # Funciones auxiliares para asimetría y curtosis 
@@ -230,10 +230,10 @@ ggsave(
   height = 8
 )
 
-# Gráfico de barras para income_group_2023
+# Gráfico de barras para income_group
 grafico_income <- df %>%
-  count(income_group_2023) %>%
-  ggplot(aes(x = income_group_2023, y = n, fill = income_group_2023)) +
+  count(income_group) %>%
+  ggplot(aes(x = income_group, y = n, fill = income_group)) +
   geom_col() +
   labs(
     title = "Distribución por grupo de ingresos",
@@ -253,10 +253,10 @@ ggsave(
 
 #boxplots
 vars_porcentaje <- c(
-  "unemp_rate_2023",
-  "elec_access_2023",
-  "rural_pct_2023",
-  "water_access_2023"
+  "unemp_rate",
+  "elec_access",
+  "rural_pct",
+  "water_access"
 )
 
 grafico_porcentaje <- df %>%
@@ -278,14 +278,14 @@ ggsave(filename = "boxplot_variables_porcentaje.png", plot = grafico_porcentaje,
 #ir seleccionando unas u otras en función de cual se quiera hacer el plot
 vars_individuales <- c(
   #"hdi_2023",
-  #"infra_lpi_2022",
-  #"gdp_pc_ppp_2023",
-  #"elec_kwh_pc_2023",
-  #"ghg_pc_2023",
-  #"f_m_tertiary_2023",
-  "secure_servers_pm_2023"
-  #"mat_mort_2023",
-  #"physicians_per1k_2023"
+  #"infra_lpi",
+  #"gdp_pc_ppp",
+  #"elec_kwh_pc",
+  #"ghg_pc",
+  "f_m_tertiary",
+  "secure_servers"
+  #"mat_mort",
+  #"physicians"
 )
 
 plots_individuales <- map(vars_individuales, function(var) {
@@ -312,17 +312,17 @@ walk2(plots_individuales, vars_individuales, function(p, nombre) {
 
 # Variables claramente candidatas a transformación logarítmica
 vars_log_claras <- c(
-  "gdp_pc_ppp_2023",
-  "secure_servers_pm_2023",
-  "elec_kwh_pc_2023",
-  "ghg_pc_2023",
-  "mat_mort_2023"
+  "gdp_pc_ppp",
+  "secure_servers",
+  "elec_kwh_pc",
+  "ghg_pc",
+  "mat_mort"
 )
 
 # Variables dudosas (las exploramos primero)
 vars_log_dudosas <- c(
-  "physicians_per1k_2023",
-  "unemp_rate_2023"
+  "physicians",
+  "unemp_rate"
 )
 
 # Crear nuevas columnas con sufijo _trans usando log1p(x) = log(1+x)
@@ -337,13 +337,13 @@ df <- df %>%
 names(df)[grepl("_trans$", names(df))]
 
 vars_compare <- c(
-  "gdp_pc_ppp_2023",
-  "secure_servers_pm_2023",
-  "elec_kwh_pc_2023",
-  "ghg_pc_2023",
-  "mat_mort_2023",
-  "physicians_per1k_2023",
-  "unemp_rate_2023"
+  "gdp_pc_ppp",
+  "secure_servers",
+  "elec_kwh_pc",
+  "ghg_pc",
+  "mat_mort",
+  "physicians",
+  "unemp_rate"
 )
 
 # Pasar a formato largo para comparar original vs transformada
@@ -403,37 +403,37 @@ comparar_hist <- function(data, var){
       y = "Frecuencia"
     )
 }
-comparar_hist(df, "gdp_pc_ppp_2023")
-comparar_hist(df, "secure_servers_pm_2023")
-comparar_hist(df, "elec_kwh_pc_2023") 
-comparar_hist(df, "ghg_pc_2023") 
-comparar_hist(df, "mat_mort_2023")
-comparar_hist(df, "physicians_per1k_2023") 
-comparar_hist(df, "unemp_rate_2023") 
+comparar_hist(df, "gdp_pc_ppp")
+comparar_hist(df, "secure_servers")
+comparar_hist(df, "elec_kwh_pc_2023") #para anexo
+comparar_hist(df, "ghg_pc") #para anexo
+comparar_hist(df, "mat_mort")
+comparar_hist(df, "physicians") #para anexo
+comparar_hist(df, "unemp_rate") #para anexo 
 
 
 ##estandarización
 
 # Variables transformadas 
 vars_trans <- c(
-  "gdp_pc_ppp_2023_trans",
-  "elec_kwh_pc_2023_trans",
-  "secure_servers_pm_2023_trans",
-  "ghg_pc_2023_trans",
-  "mat_mort_2023_trans"
+  "gdp_pc_ppp_trans",
+  "elec_kwh_pc_trans",
+  "secure_servers_trans",
+  "ghg_pc_trans",
+  "mat_mort_trans"
 )
 
 # Variables originales 
 vars_orig <- c(
-  "elec_access_2023",
-  "water_access_2023",
-  "unemp_rate_2023",
-  "physicians_per1k_2023",
-  "f_m_tertiary_2023",
-  "hdi_2023",
-  "infra_lpi_2022",
-  "lifeexp_2023",
-  "rural_pct_2023"
+  "elec_access",
+  "water_access",
+  "unemp_rate",
+  "physicians",
+  "f_m_tertiary",
+  "hdi",
+  "infra_lpi",
+  "lifeexp",
+  "rural_pct"
 )
 
 # Vector final de variables activas a estandarizar
@@ -452,7 +452,7 @@ df_final <- df %>%
   select(
     pais,
     region,
-    income_group_2023,
+    income_group,
     ends_with("_std")
   )
 
@@ -460,23 +460,23 @@ df_final <- df %>%
 #pca
 
 vars_pca <- c(
-  "gdp_pc_ppp_2023_trans_std",
-  "elec_kwh_pc_2023_trans_std",
-  "secure_servers_pm_2023_trans_std",
-  "ghg_pc_2023_trans_std",
-  "mat_mort_2023_trans_std",
-  "elec_access_2023_std",
-  "water_access_2023_std",
-  "unemp_rate_2023_std",
-  "physicians_per1k_2023_std",
-  "f_m_tertiary_2023_std",
-  "infra_lpi_2022_std",
-  "lifeexp_2023_std",
-  "rural_pct_2023_std"
+  "gdp_pc_ppp_trans_std",
+  "elec_kwh_pc_trans_std",
+  "secure_servers_trans_std",
+  "ghg_pc_trans_std",
+  "mat_mort_trans_std",
+  "elec_access_std",
+  "water_access_std",
+  "unemp_rate_std",
+  "physicians_std",
+  "f_m_tertiary_std",
+  "infra_lpi_std",
+  "lifeexp_std",
+  "rural_pct_std"
 )
 
 df_pca <- df_final %>%
-  select(pais, region, income_group_2023, all_of(vars_pca))
+  select(pais, region, income_group, all_of(vars_pca))
 
 
 colSums(is.na(df_pca))
@@ -499,10 +499,12 @@ eig_val <- get_eigenvalue(res_pca)
 eig_val
 
 #scree plot
+max_var <- max(res_pca$eig[,2])
+
 fviz_eig(
   res_pca,
   addlabels = TRUE,
-  ylim = c(0, 50),
+  ylim = c(0, max_var + 5),
   barfill = "violet",
   barcolor = "violet"
 )
@@ -514,6 +516,7 @@ var_coord <- get_pca_var(res_pca)
 var_coord$coord      # coordenadas/cargas
 var_coord$contrib    # contribución a cada componente
 var_coord$cos2       # calidad de representación
+res_pca$svd$V        #pesos naturales
 
 cargas_pca <- as.data.frame(var_coord$coord[, 1:2])
 cargas_pca$Variable <- rownames(cargas_pca)
@@ -546,7 +549,7 @@ coord_paises <- as.data.frame(ind_coord$coord) %>%
   mutate(
     pais = df_pca_clean$pais,
     region = df_pca_clean$region,
-    income_group_2023 = df_pca_clean$income_group_2023
+    income_group = df_pca_clean$income_group
   )
 
 head(coord_paises)
@@ -558,7 +561,35 @@ fviz_pca_var(
   gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
   repel = TRUE
 )
+#VERSIÓN MEJORADA
+# Gráfico base sin etiquetas
+p <- fviz_pca_var(
+  res_pca,
+  col.var = "contrib",
+  gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+  label = "none"
+)
 
+# Extraer info
+var <- get_pca_var(res_pca)
+
+# Top 8 variables (según contribución total Dim1+Dim2)
+contrib_total <- var$contrib[,1] + var$contrib[,2]
+top_vars <- names(sort(contrib_total, decreasing = TRUE))[1:10]
+
+# Crear data frame SOLO con esas variables
+df_labels <- as.data.frame(var$coord[top_vars, ])
+df_labels$varname <- rownames(df_labels)
+
+# Añadir etiquetas
+p + geom_text_repel(
+  data = df_labels,
+  aes(x = Dim.1, y = Dim.2, label = varname),
+  size = 4
+) +
+  theme(
+    legend.position = "bottom"
+  )
 #ggsave("circulo_correlaciones_pca.png", width = 8, height = 6, dpi = 300)
 
 #plano de individuos coloreado por región
@@ -569,18 +600,23 @@ fviz_pca_ind(
   palette = "jco",
   addEllipses = FALSE,
   repel = TRUE
+) + theme(
+  legend.position = "bottom",
+  legend.direction = "horizontal"
 )
 
 #plano de individuos coloreado por grupo de ingresos
 fviz_pca_ind(
   res_pca,
   geom.ind = "point",
-  col.ind = df_pca_clean$income_group_2023,
+  col.ind = df_pca_clean$income_group,
   palette = "jco",
   addEllipses = FALSE,
   repel = TRUE
+) + theme(
+  legend.position = "bottom",
+  legend.direction = "horizontal"
 )
-
 #BIPLOT
 fviz_pca_biplot(
   res_pca,
@@ -588,10 +624,41 @@ fviz_pca_biplot(
   col.var = "steelblue",
   col.ind = "pink"
 )
+# Gráfico base: puntos + flechas, pero sin etiquetas
+p <- fviz_pca_biplot(
+  res_pca,
+  geom.ind = "point",
+  label = "none",
+  col.ind = "#E87687",
+  col.var = "steelblue",
+  repel = TRUE
+)
+
+# Extraer variables
+var <- get_pca_var(res_pca)
+
+# Top 8 variables según contribución total Dim1 + Dim2
+contrib_total <- var$contrib[,1] + var$contrib[,2]
+top_vars <- names(sort(contrib_total, decreasing = TRUE))[1:8]
+
+# Data frame con solo las etiquetas top 8
+df_labels <- as.data.frame(var$coord[top_vars, ])
+df_labels$varname <- rownames(df_labels)
+
+# Añadir nombres solo a las 8 variables principales
+p +
+  geom_text_repel(
+    data = df_labels,
+    aes(x = Dim.1, y = Dim.2, label = varname),
+    color = "darkblue",
+    size = 4
+  ) +
+  theme(
+    legend.position = "bottom"
+  )
 #ggsave("biplot_pca.png", width = 9, height = 7, dpi = 300)
 
-
-
+  
 #cluster analysis
 
 # Coordenadas de los individuos en el espacio PCA
@@ -599,7 +666,7 @@ coord_paises <- as.data.frame(res_pca$ind$coord) %>%
   mutate(
     pais = df_pca_clean$pais,
     region = df_pca_clean$region,
-    income_group_2023 = df_pca_clean$income_group_2023
+    income_group = df_pca_clean$income_group
   )
 
 # Nos quedamos con las dos primeras componentes
@@ -618,11 +685,13 @@ fviz_nbclust(X_clust, kmeans, method = "silhouette") +
 set.seed(123)
 kmeans_res_2 <- kmeans(X_clust, centers = 2, nstart = 25)
 kmeans_res_3 <- kmeans(X_clust, centers = 3, nstart = 25)
+kmeans_res_4 <- kmeans(X_clust, centers = 4, nstart = 25)
 
 coord_paises <- coord_paises %>%
   mutate(
     cluster_k2 = factor(kmeans_res_2$cluster),
-    cluster_k3 = factor(kmeans_res_3$cluster)
+    cluster_k3 = factor(kmeans_res_3$cluster),
+    cluster_k4 = factor(kmeans_res_4$cluster)
   )
 
 #visualizar con factoextra k = 2
@@ -642,14 +711,69 @@ fviz_cluster(
   ellipse.type = "convex",
   ggtheme = theme_minimal()
 )
+  
+#visualizar con factoextra k = 4
+fviz_cluster(
+  kmeans_res_4,
+  data = X_clust,
+  geom = "point",
+  ellipse.type = "convex",
+  ggtheme = theme_minimal()
+)
+
+#centros con k = 3 
+kmeans_res_3$centers
+
+coord_paises %>%
+  group_by(cluster_k3) %>%
+  summarise(
+    centro_Dim1 = mean(Dim.1),
+    centro_Dim2 = mean(Dim.2),
+    n = n()
+  )
+
+
+centros <- coord_paises %>%
+  group_by(cluster_k3) %>%
+  summarise(
+    Dim.1 = mean(Dim.1),
+    Dim.2 = mean(Dim.2),
+    .groups = "drop"
+  )
+
+ggplot(coord_paises, aes(x = Dim.1, y = Dim.2, color = cluster_k3)) +
+  geom_point(size = 2, alpha = 0.8) +
+  geom_point(
+    data = centros,
+    aes(x = Dim.1, y = Dim.2),
+    shape = 8,
+    size = 5,
+    color = "black",
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = centros,
+    aes(x = Dim.1, y = Dim.2, label = cluster_k3),
+    vjust = -1,
+    fontface = "bold",
+    inherit.aes = FALSE
+  ) +
+  labs(
+    title = "Clusters k-means con centroides",
+    x = "Componente principal 1",
+    y = "Componente principal 2",
+    color = "Cluster"
+  ) +
+  theme_minimal()
 
 #comparaciones
 table(coord_paises$cluster_k2)
 table(coord_paises$cluster_k3)
 
-table(coord_paises$cluster_k3, coord_paises$income_group_2023)
+table(coord_paises$cluster_k3, coord_paises$income_group)
 table(coord_paises$cluster_k3, coord_paises$region)
 
+  
 #cluster jerárquico (k = 3) SOBRE LAS 2 PRIMERAS CP
 
 # Dataset para clustering: dos primeras componentes
@@ -690,8 +814,8 @@ table(coord_paises$cluster_hc3)
 
 #DISTRIBUCIONES DE LOS PAÍSES POR CLUSTER, COMPARANDO AMBOS MÉTODOS
 # Distribución por grupo de ingresos
-table(coord_paises$cluster_hc3, coord_paises$income_group_2023)
-table(coord_paises$cluster_k3, coord_paises$income_group_2023)
+table(coord_paises$cluster_hc3, coord_paises$income_group)
+table(coord_paises$cluster_k3, coord_paises$income_group)
 
 # Distribución por región
 table(coord_paises$cluster_hc3, coord_paises$region)
@@ -715,13 +839,13 @@ df_clusters <- df %>%
 tabla_medias_cluster <- df_clusters %>%
   group_by(cluster_k3) %>%
   summarise(
-    pib_pc = mean(gdp_pc_ppp_2023, na.rm = TRUE),
-    esperanza_vida = mean(lifeexp_2023, na.rm = TRUE),
-    mortalidad_materna = mean(mat_mort_2023, na.rm = TRUE),
-    agua = mean(water_access_2023, na.rm = TRUE),
-    electricidad = mean(elec_access_2023, na.rm = TRUE),
-    infraestructura = mean(infra_lpi_2022, na.rm = TRUE),
-    poblacion_rural = mean(rural_pct_2023, na.rm = TRUE)
+    pib_pc = mean(gdp_pc_ppp, na.rm = TRUE),
+    esperanza_vida = mean(lifeexp, na.rm = TRUE),
+    mortalidad_materna = mean(mat_mort, na.rm = TRUE),
+    agua = mean(water_access, na.rm = TRUE),
+    electricidad = mean(elec_access, na.rm = TRUE),
+    infraestructura = mean(infra_lpi, na.rm = TRUE),
+    poblacion_rural = mean(rural_pct, na.rm = TRUE)
   ) %>%
   mutate(across(where(is.numeric), ~ round(.x, 2)))
 
@@ -741,18 +865,16 @@ tabla_idh_cluster <- df_idh_cluster %>%
   group_by(cluster_k3) %>%
   summarise(
     n_paises = n(),
-    idh_medio = mean(hdi_2023, na.rm = TRUE),
-    idh_sd = sd(hdi_2023, na.rm = TRUE),
-    idh_min = min(hdi_2023, na.rm = TRUE),
-    idh_max = max(hdi_2023, na.rm = TRUE)
+    idh_medio = mean(hdi, na.rm = TRUE),
+    idh_sd = sd(hdi, na.rm = TRUE),
+    idh_min = min(hdi, na.rm = TRUE),
+    idh_max = max(hdi, na.rm = TRUE)
   ) %>%
   mutate(across(where(is.numeric), ~ round(.x, 3)))
 
 tabla_idh_cluster
 
-library(ggplot2)
-
-ggplot(df_idh_cluster, aes(x = cluster_k3, y = hdi_2023, fill = cluster_k3)) +
+ggplot(df_idh_cluster, aes(x = cluster_k3, y = hdi, fill = cluster_k3)) +
   geom_boxplot() +
   theme_minimal() +
   labs(
