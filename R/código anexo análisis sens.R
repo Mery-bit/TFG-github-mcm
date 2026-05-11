@@ -27,22 +27,22 @@ names(df_anex)
 df_anex <- df_anex %>%
   rename(
     pais                 = pais,  
-    gdp_pc_ppp_2023       = pib_per_capita_fmi_2023,
-    income_group_2023     = nivel_de_ingreso_2023,
+    gdp_pc_ppp       = pib_per_capita_fmi_2023,
+    income_group     = nivel_de_ingreso_2023,
     region                = region,
-    unemp_rate_2023       = desempleo_percent_total_2023,
-    elec_access_2023      = acceso_a_electricidad_percent_total_2023,
-    elec_kwh_pc_2023      = consumo_de_energia_electrica_k_wh_per_capita_2023,
-    rural_pct_2023        = poblacion_rural_percent_de_la_poblacion_total_2023,
-    ghg_pc_2023           = emisiones_totales_gases_efecto_invernadero_per_capita_c02e_capita_2023,
-    lifeexp_2023          = esperanza_de_vida_al_nacer_anos_media_entre_h_y_m_2023,
-    f_m_tertiary_2023     = mujeres_vs_hombres_en_eduacion_terciaria_2023,
-    secure_servers_pm_2023 = servidores_de_internet_seguros_por_cada_millon_de_personas_2023,
-    infra_lpi_2022        = calidad_de_la_infraestructura_relacionada_con_el_comercio_y_el_transporte_2022,
-    mat_mort_2023         = tasa_de_mortalidad_materna_por_cada_100000_nacidos_vivos_2023,
-    physicians_per1k_2023 = medicos_por_cada_1000_personas_2023,
-    water_access_2023     = acceso_a_agua_potable_percent_poblacion_2023,
-    hdi_2023              = nivel_de_desarrollo_humano_segun_la_onu_2023
+    unemp_rate       = desempleo_percent_total_2023,
+    elec_access     = acceso_a_electricidad_percent_total_2023,
+    elec_kwh_pc     = consumo_de_energia_electrica_k_wh_per_capita_2023,
+    rural_pct     = poblacion_rural_percent_de_la_poblacion_total_2023,
+    ghg_pc         = emisiones_totales_gases_efecto_invernadero_per_capita_c02e_capita_2023,
+    lifeexp         = esperanza_de_vida_al_nacer_anos_media_entre_h_y_m_2023,
+    f_m_tertiary     = mujeres_vs_hombres_en_eduacion_terciaria_2023,
+    secure_servers = servidores_de_internet_seguros_por_cada_millon_de_personas_2023,
+    infra_lpi = calidad_de_la_infraestructura_relacionada_con_el_comercio_y_el_transporte_2022,
+    mat_mort         = tasa_de_mortalidad_materna_por_cada_100000_nacidos_vivos_2023,
+    physicians = medicos_por_cada_1000_personas_2023,
+    water_access = acceso_a_agua_potable_percent_poblacion_2023,
+    hdi    = nivel_de_desarrollo_humano_segun_la_onu_2023
   )
 names(df_anex)
 
@@ -64,11 +64,11 @@ na_por_variable_anex <- df_mean_anex %>%
 
 #transformar y estandarizar
 vars_log_claras_anex <- c(
-  "gdp_pc_ppp_2023",
-  "secure_servers_pm_2023",
-  "elec_kwh_pc_2023",
-  "ghg_pc_2023",
-  "mat_mort_2023"
+  "gdp_pc_ppp",
+  "secure_servers",
+  "elec_kwh_pc",
+  "ghg_pc",
+  "mat_mort"
 )
 
 df_mean_anex <- df_mean_anex %>%
@@ -82,20 +82,20 @@ df_mean_anex <- df_mean_anex %>%
 names(df_mean_anex)[grepl("_trans$", names(df_mean_anex))]
 
 vars_anex <- c(
-  "elec_access_2023",
-  "water_access_2023",
-  "unemp_rate_2023",
-  "physicians_per1k_2023",
-  "f_m_tertiary_2023",
-  "hdi_2023",
-  "infra_lpi_2022",
-  "lifeexp_2023",
-  "rural_pct_2023",
-  "gdp_pc_ppp_2023_trans",
-  "secure_servers_pm_2023_trans",
-  "elec_kwh_pc_2023_trans",
-  "ghg_pc_2023_trans",
-  "mat_mort_2023_trans"
+  "elec_access",
+  "water_access",
+  "unemp_rate",
+  "physicians",
+  "f_m_tertiary",
+  "hdi",
+  "infra_lpi",
+  "lifeexp",
+  "rural_pct",
+  "gdp_pc_ppp_trans",
+  "secure_servers_trans",
+  "elec_kwh_pc_trans",
+  "ghg_pc_trans",
+  "mat_mort_trans"
 )
 
 df_mean_anex <- df_mean_anex %>%
@@ -109,19 +109,19 @@ df_mean_anex <- df_mean_anex %>%
 
 #pca
 vars_pca_anex <- c(
-  "gdp_pc_ppp_2023_trans_std",
-  "elec_kwh_pc_2023_trans_std",
-  "secure_servers_pm_2023_trans_std",
-  "ghg_pc_2023_trans_std",
-  "mat_mort_2023_trans_std",
-  "elec_access_2023_std",
-  "water_access_2023_std",
-  "unemp_rate_2023_std",
-  "physicians_per1k_2023_std",
-  "f_m_tertiary_2023_std",
-  "infra_lpi_2022_std",
-  "lifeexp_2023_std",
-  "rural_pct_2023_std"
+  "gdp_pc_ppp_trans_std",
+  "elec_kwh_pc_trans_std",
+  "secure_servers_trans_std",
+  "ghg_pc_trans_std",
+  "mat_mort_trans_std",
+  "elec_access_std",
+  "water_access_std",
+  "unemp_rate_std",
+  "physicians_std",
+  "f_m_tertiary_std",
+  "infra_lpi_std",
+  "lifeexp_std",
+  "rural_pct_std"
 )
 
 res_pca <- PCA(
@@ -135,27 +135,53 @@ eig_val <- get_eigenvalue(res_pca)
 eig_val
 
 #scree plot
+max_var <- max(res_pca$eig[,2])
+
 fviz_eig(
   res_pca,
   addlabels = TRUE,
-  ylim = c(0, 50),
+  ylim = c(0, max_var + 5),
   barfill = "purple",
   barcolor = "purple"
 )
 
-fviz_pca_var(
+#círculo de correlaciones
+# Gráfico base sin etiquetas
+p <- fviz_pca_var(
   res_pca,
   col.var = "contrib",
   gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-  repel = TRUE
+  label = "none"
 )
+
+# Extraer info
+var <- get_pca_var(res_pca)
+
+# Top 8 variables (según contribución total Dim1+Dim2)
+contrib_total <- var$contrib[,1] + var$contrib[,2]
+top_vars <- names(sort(contrib_total, decreasing = TRUE))[1:8]
+
+# Crear data frame SOLO con esas variables
+df_labels <- as.data.frame(var$coord[top_vars, ])
+df_labels$varname <- rownames(df_labels)
+
+# Añadir etiquetas
+p + geom_text_repel(
+  data = df_labels,
+  aes(x = Dim.1, y = Dim.2, label = varname),
+  size = 4
+) +
+  theme(
+    legend.position = "bottom"
+  )
+
 
 #cluster
 coord_paises <- as.data.frame(res_pca$ind$coord) %>%
   mutate(
     pais = df_mean_anex$pais,
     region = df_mean_anex$region,
-    income_group_2023 = df_mean_anex$income_group_2023
+    income_group = df_mean_anex$income_group
   )
 
 # Nos quedamos con las dos primeras componentes
@@ -199,11 +225,11 @@ df_complete_anex <- na.omit(df_anex)
 
 #transformar y estandarizar
 vars_log_claras_anex <- c(
-  "gdp_pc_ppp_2023",
-  "secure_servers_pm_2023",
-  "elec_kwh_pc_2023",
-  "ghg_pc_2023",
-  "mat_mort_2023"
+  "gdp_pc_ppp",
+  "secure_servers",
+  "elec_kwh_pc",
+  "ghg_pc",
+  "mat_mort"
 )
 
 df_complete_anex <- df_complete_anex %>%
@@ -217,20 +243,20 @@ df_complete_anex <- df_complete_anex %>%
 names(df_complete_anex)[grepl("_trans$", names(df_complete_anex))]
 
 vars_anex <- c(
-  "elec_access_2023",
-  "water_access_2023",
-  "unemp_rate_2023",
-  "physicians_per1k_2023",
-  "f_m_tertiary_2023",
-  "hdi_2023",
-  "infra_lpi_2022",
-  "lifeexp_2023",
-  "rural_pct_2023",
-  "gdp_pc_ppp_2023_trans",
-  "secure_servers_pm_2023_trans",
-  "elec_kwh_pc_2023_trans",
-  "ghg_pc_2023_trans",
-  "mat_mort_2023_trans"
+  "elec_access",
+  "water_access",
+  "unemp_rate",
+  "physicians",
+  "f_m_tertiary",
+  "hdi",
+  "infra_lpi",
+  "lifeexp",
+  "rural_pct",
+  "gdp_pc_ppp_trans",
+  "secure_servers_trans",
+  "elec_kwh_pc_trans",
+  "ghg_pc_trans",
+  "mat_mort_trans"
 )
 
 df_complete_anex <- df_complete_anex %>%
@@ -243,20 +269,20 @@ df_complete_anex <- df_complete_anex %>%
   )
 
 #pca
-vars_pca_anex <- c(
-  "gdp_pc_ppp_2023_trans_std",
-  "elec_kwh_pc_2023_trans_std",
-  "secure_servers_pm_2023_trans_std",
-  "ghg_pc_2023_trans_std",
-  "mat_mort_2023_trans_std",
-  "elec_access_2023_std",
-  "water_access_2023_std",
-  "unemp_rate_2023_std",
-  "physicians_per1k_2023_std",
-  "f_m_tertiary_2023_std",
-  "infra_lpi_2022_std",
-  "lifeexp_2023_std",
-  "rural_pct_2023_std"
+vars_pca_anex <-c(
+  "gdp_pc_ppp_trans_std",
+  "elec_kwh_pc_trans_std",
+  "secure_servers_trans_std",
+  "ghg_pc_trans_std",
+  "mat_mort_trans_std",
+  "elec_access_std",
+  "water_access_std",
+  "unemp_rate_std",
+  "physicians_std",
+  "f_m_tertiary_std",
+  "infra_lpi_std",
+  "lifeexp_std",
+  "rural_pct_std"
 )
 
 res_pca <- PCA(
@@ -270,27 +296,53 @@ eig_val <- get_eigenvalue(res_pca)
 eig_val
 
 #scree plot
+max_var <- max(res_pca$eig[,2])
+
 fviz_eig(
   res_pca,
   addlabels = TRUE,
-  ylim = c(0, 50),
+  ylim = c(0, max_var + 5),
   barfill = "lightblue",
   barcolor = "lightblue"
 )
 
-fviz_pca_var(
+#círculo de correlaciones
+# Gráfico base sin etiquetas
+p <- fviz_pca_var(
   res_pca,
   col.var = "contrib",
   gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-  repel = TRUE
+  label = "none"
 )
+
+# Extraer info
+var <- get_pca_var(res_pca)
+
+# Top 8 variables (según contribución total Dim1+Dim2)
+contrib_total <- var$contrib[,1] + var$contrib[,2]
+top_vars <- names(sort(contrib_total, decreasing = TRUE))[1:8]
+
+# Crear data frame SOLO con esas variables
+df_labels <- as.data.frame(var$coord[top_vars, ])
+df_labels$varname <- rownames(df_labels)
+
+# Añadir etiquetas
+p + geom_text_repel(
+  data = df_labels,
+  aes(x = Dim.1, y = Dim.2, label = varname),
+  size = 4
+) +
+  theme(
+    legend.position = "bottom"
+  )
+
 
 #cluster
 coord_paises <- as.data.frame(res_pca$ind$coord) %>%
   mutate(
     pais = df_complete_anex$pais,
     region = df_complete_anex$region,
-    income_group_2023 = df_complete_anex$income_group_2023
+    income_group = df_complete_anex$income_group
   )
 
 # Nos quedamos con las dos primeras componentes
